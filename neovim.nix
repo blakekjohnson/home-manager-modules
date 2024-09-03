@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     pkgs.marksman
     pkgs.ripgrep
+    vimPlugins.lualine-nvim
   ];
 
   programs.neovim = {
@@ -34,6 +35,20 @@
         config = ''
           require('kanagawa').setup{}
           vim.cmd[[colorscheme kanagawa]]
+        '';
+      }
+      {
+        plugin = nvim-treesitter;
+        type = "lua";
+        config = ''
+          require'nvim-treesitter.configs'.setup {
+            highlight = {
+              enable = true,
+            },
+            indent = {
+              enable = true,
+            },
+          }
         '';
       }
       (nvim-treesitter.withPlugins (p: [
@@ -92,15 +107,6 @@
       telescope-nvim
     ];
     extraLuaConfig = ''
-      require'nvim-treesitter.configs'.setup {
-        highlight = {
-          enable = true,
-        },
-        indent = {
-          enable = true,
-        },
-      }
-
       vim.opt.conceallevel = 2
     '';
     extraConfig = ''
